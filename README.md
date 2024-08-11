@@ -14,7 +14,6 @@
 | **Disciplina**    | Pertence                          | N:1                    | Departamento             | Não é necessária                    | `Disciplina.DepartamentoID`              |
 |                   | Ministrada por                    | N:M                    | Professor                | `ProfessorDisciplina`               | `ProfessorDisciplina.ProfessorID`, `ProfessorDisciplina.DisciplinaID` |
 |                   | Pré-requisito para                | N:M                    | Disciplina (mesma entidade) | `DisciplinaPrerequisito`          | `DisciplinaPrerequisito.DisciplinaID`, `DisciplinaPrerequisito.PrerequisitoID` |
-|                   | Associada a                       | N:M                    | Nota                     | `NotaDisciplina`                   | `NotaDisciplina.DisciplinaID`, `NotaDisciplina.NotaID` |
 |                   | Associada a                       | N:M                    | GradeNota                | `DisciplinaGradeNota`               | `DisciplinaGradeNota.DisciplinaID`, `DisciplinaGradeNota.GradeNotaID` |
 | **Professor**     | Pertence                          | N:1                    | Departamento             | Não é necessária                    | `Professor.DepartamentoID`               |
 |                   | Leciona                           | N:M                    | Disciplina               | `ProfessorDisciplina`               | `ProfessorDisciplina.ProfessorID`, `ProfessorDisciplina.DisciplinaID` |
