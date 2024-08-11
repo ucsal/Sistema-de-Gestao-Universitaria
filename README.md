@@ -38,18 +38,5 @@
 |                   | Relacionada                      | 1:1                    | Professor                | Não é necessária                    | `Professor.MatriculaID`                  |
 | **Secretaria**    | Gerencia                         | 1:N                    | Departamento             | Não é necessária                    | `Secretaria.DepartamentoID`              |
 |                   | Gerencia                         | 1:N                    | Matrícula                | Não é necessária                    | `Secretaria.MatriculaID`                 |
-|                   | Conecta-se com                   | N:M                    | Aluno                    | `AlunoSecretaria`                   | `AlunoSecretaria.AlunoID`, `AlunoSecretaria.SecretariaID` |
+|                   | Conecta-se com                   | 1:n                    | Aluno                    | `AlunoSecretaria`                   | `AlunoSecretaria.AlunoID`, `AlunoSecretaria.SecretariaID` |
 
-### Explicações Adicionais:
-
-1. **Secretaria**:
-   - A secretaria gerencia os **Departamentos** e as **Matrículas**. Isso garante que todos os processos administrativos estejam centralizados.
-   - Cada **Aluno** tem uma conexão com a secretaria, que pode incluir a gestão de pagamentos.
-
-2. **Alunos e Secretaria**:
-   - A relação entre **Alunos** e **Secretaria** pode ser usada para registrar informações sobre pagamentos, comunicação e outras interações administrativas.
-
-3. **Matrículas**:
-   - A matrícula é gerenciada pela secretaria, garantindo que todos os processos de matrícula sejam centralizados.
-
-Com essas adições, o modelo do sistema fica mais robusto e pronto para gerenciar as operações da secretaria, além de facilitar a conexão com os alunos. Se precisar de mais detalhes ou ajustes, é só avisar!
