@@ -1,7 +1,7 @@
 # Sistema-de-Gestao-Universitaria
 
 
-### Tabela de Relacionamentos Atualizada
+### Tabela de Relacionamentos, AJEITAR ATRIBUTOS 
 
 | Entidade          | Relacionamento                    | Tipo de Relacionamento | Entidade Relacionada     | Tabela Associativa (se necessário)  | Chaves Estrangeiras                      |
 |-------------------|-----------------------------------|------------------------|--------------------------|-------------------------------------|------------------------------------------|
