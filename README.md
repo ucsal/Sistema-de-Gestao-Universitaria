@@ -38,3 +38,17 @@
 |                   | Gerencia                         | 1:N                    | Matrícula                | Não é necessária                    | `Secretaria.MatriculaID`                 |
 |                   | Conecta-se com                   | N:M                    | Aluno                    | `AlunoSecretaria`                   | `AlunoSecretaria.AlunoID`, `AlunoSecretaria.SecretariaID` |
 
+
+
+
+
+DER BASE
+
+![image](https://github.com/user-attachments/assets/7dc90a92-44c2-48e5-84d0-0786f21bbf0d)
+
+DER CREATED
+
+![image](https://github.com/user-attachments/assets/73dfcb79-c98e-4d14-b430-1762baf57aaa)
+
+
+
