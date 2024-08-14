@@ -331,14 +331,6 @@ FROM
 FROM
 	"public".tb_disciplinas_pre_requisitos s;]]></string>
 		</script>
-		<query id="Query-1033" name="frequencia" >
-			<query_table schema="public" name="tb_disciplina_historico" alias="tdh" x="48" y="48" >
-				<column name="cod_historico" />
-				<column name="cod_disciplina" />
-				<column name="historico_grade_notas" />
-				<column name="historico_grade_frequencia" />
-			</query_table>
-		</query>
 	</layout>
 	<layout name="~Layout with Sample Tools" id="Layout-1669" show_column_type="y" show_relation="columns" >
 		<script name="SQL Editor" id="Editor-e6" language="SQL" >
