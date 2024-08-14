@@ -24,14 +24,15 @@
 | Turmas (`tb_turma`)             | `id_turma`, `id_disciplina`, `ano`, `semestre`           | Tem alunos matriculados                           | Alunos (`tb_aluno`)              | `id_aluno`, `status`                            | Uma turma pode ter vários alunos matriculados. O relacionamento é realizado através de uma tabela associativa `tb_turma_aluno` que contém `id_turma` e `id_aluno`.                                                                                                                                              |
 
 
-
 DER BASE
 
 ![image](https://github.com/user-attachments/assets/7dc90a92-44c2-48e5-84d0-0786f21bbf0d)
 
 DER CREATED
 
-![image](https://github.com/user-attachments/assets/73dfcb79-c98e-4d14-b430-1762baf57aaa)
+
+
+![db](https://github.com/user-attachments/assets/891a7efb-27a1-41e3-bc3e-d81bb6eafefb)
 
 
 
