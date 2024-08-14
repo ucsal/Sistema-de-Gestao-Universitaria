@@ -25,7 +25,7 @@
 			<column name="cod_turma" type="integer" jt="4" mandatory="y" />
 			<column name="cpf" type="integer" jt="4" mandatory="y" />
 			<column name="cod_curso" type="integer" jt="4" />
-			<column name="matricula" type="integer" jt="4" mandatory="y" />
+			<column name="matricula" prior="cod_matricula" type="integer" jt="4" mandatory="y" />
 			<column name="cod_grade_nota" type="integer" jt="4" mandatory="y" />
 			<column name="cod_grade_presenca" type="integer" jt="4" />
 			<column name="cod_semestre" type="integer" jt="4" />
@@ -34,15 +34,12 @@
 			<column name="telefone" type="varchar" length="15" jt="12" mandatory="y" />
 			<column name="endereco" type="text" jt="12" mandatory="y" />
 			<column name="data_matricula" type="date" length="0" jt="91" mandatory="y" />
-			<index name="pk_tb_aluno" unique="PRIMARY_KEY" >
-				<column name="matricula" />
-			</index>
 			<index name="tb_aluno_email_key" unique="UNIQUE_KEY" >
 				<column name="email" />
 			</index>
-			<fk name="fk_tb_aluno_tb_curso" to_schema="public" to_table="tb_curso" >
-				<fk_column name="cod_curso" pk="cod_curso" />
-			</fk>
+			<index name="unq_tb_aluno_matricula" unique="UNIQUE_KEY" >
+				<column name="matricula" />
+			</index>
 			<fk name="fk_tb_aluno_tb_turma" to_schema="public" to_table="tb_turma" >
 				<fk_column name="cod_turma" pk="cod_turma" />
 			</fk>
@@ -52,19 +49,25 @@
 			<fk name="fk_tb_aluno_tb_semestre" to_schema="public" to_table="tb_semestre" >
 				<fk_column name="cod_semestre" pk="cod_semestre" />
 			</fk>
+			<fk name="fk_tb_aluno_tb_curso" to_schema="public" to_table="tb_curso_aluno" >
+				<fk_column name="cod_curso" pk="cod_curso" />
+			</fk>
+			<fk name="fk_tb_aluno_prof_disciplina" to_schema="public" to_table="tb_curso" >
+				<fk_column name="cod_curso" pk="cod_curso" />
+			</fk>
 		</table>
 		<table name="tb_aluno_disciplina" >
-			<column name="cod_aluno" type="integer" jt="4" mandatory="y" />
+			<column name="matricula" prior="cod_aluno" type="integer" jt="4" mandatory="y" />
 			<column name="cod_disciplina" type="integer" jt="4" mandatory="y" />
 			<index name="pk_tb_aluno_disciplina" unique="PRIMARY_KEY" >
 				<column name="cod_disciplina" />
-				<column name="cod_aluno" />
+				<column name="matricula" />
 			</index>
-			<fk name="fk_tb_aluno" to_schema="public" to_table="tb_aluno" >
-				<fk_column name="cod_aluno" pk="matricula" />
-			</fk>
 			<fk name="fk_tb_aluno_disciplina" to_schema="public" to_table="tb_disciplina" >
 				<fk_column name="cod_disciplina" pk="cod_disciplina" />
+			</fk>
+			<fk name="fk_tb_aluno" to_schema="public" to_table="tb_aluno" >
+				<fk_column name="matricula" pk="matricula" />
 			</fk>
 		</table>
 		<table name="tb_aluno_semestre" >
@@ -79,6 +82,20 @@
 			</fk>
 			<fk name="fk_tb_aluno_semestre" to_schema="public" to_table="tb_semestre" >
 				<fk_column name="cod_semestre" pk="cod_semestre" />
+			</fk>
+		</table>
+		<table name="tb_aluno_turma" >
+			<column name="matricula" type="integer" jt="4" mandatory="y" />
+			<column name="cod_turma" type="integer" jt="4" mandatory="y" />
+			<index name="pk_tb_aluno_turma" unique="PRIMARY_KEY" >
+				<column name="cod_turma" />
+				<column name="matricula" />
+			</index>
+			<fk name="fk_tb_aluno_turma_tb_turma" to_schema="public" to_table="tb_turma" >
+				<fk_column name="cod_turma" pk="cod_turma" />
+			</fk>
+			<fk name="fk_tb_aluno_turma_tb_aluno" to_schema="public" to_table="tb_aluno" >
+				<fk_column name="matricula" pk="matricula" />
 			</fk>
 		</table>
 		<table name="tb_co_requisitos" >
@@ -107,6 +124,26 @@
 			</index>
 			<fk name="fk_tb_curso_tb_departamento" to_schema="public" to_table="tb_departamento" >
 				<fk_column name="cod_departamento" pk="cod_departamento" />
+			</fk>
+		</table>
+		<table name="tb_curso_aluno" prior="tb_matricula_aluno" >
+			<column name="cod_curso" type="integer" jt="4" mandatory="y" />
+			<column name="data_inicio" type="date" jt="91" mandatory="y" />
+			<column name="data_termino" type="date" jt="91" mandatory="y" />
+			<column name="cpf" type="varchar" length="11" jt="12" mandatory="y" />
+			<column name="matricula" type="integer" jt="4" mandatory="y" />
+			<index name="pk_tb_matricula_aluno" unique="PRIMARY_KEY" >
+				<column name="matricula" />
+				<column name="cod_curso" />
+			</index>
+			<index name="unq_tb_matricula_aluno_cod_curso" unique="UNIQUE_KEY" >
+				<column name="cod_curso" />
+			</index>
+			<fk name="fk_tb_matricula_aluno_tb_curso" to_schema="public" to_table="tb_curso" >
+				<fk_column name="cod_curso" pk="cod_curso" />
+			</fk>
+			<fk name="fk_tb_matricula_aluno_null" to_schema="public" to_table="tb_aluno" >
+				<fk_column name="matricula" pk="matricula" />
 			</fk>
 		</table>
 		<table name="tb_curso_disciplina" >
@@ -320,24 +357,26 @@
 		<sequence name="turmas_id_seq" options="AS integer START WITH 1 INCREMENT BY 1" />
 	</schema>
 	<layout name="Main Layout" id="Layout-754" show_relation="columns" >
-		<entity schema="public" name="prof_disciplina" color="C1D8EE" x="752" y="704" />
-		<entity schema="public" name="tb_aluno" color="C1D8EE" x="112" y="816" />
-		<entity schema="public" name="tb_aluno_disciplina" color="C1D8EE" x="320" y="624" />
-		<entity schema="public" name="tb_aluno_semestre" color="C1D8EE" x="832" y="976" />
-		<entity schema="public" name="tb_co_requisitos" color="C1D8EE" x="736" y="608" />
-		<entity schema="public" name="tb_curso" color="C1D8EE" x="944" y="432" />
-		<entity schema="public" name="tb_curso_disciplina" color="C1D8EE" x="688" y="496" />
-		<entity schema="public" name="tb_departamento" color="C1D8EE" x="1408" y="496" />
-		<entity schema="public" name="tb_disciplina" color="C1D8EE" x="688" y="208" />
-		<entity schema="public" name="tb_disciplina_historico" color="C1D8EE" x="384" y="48" />
-		<entity schema="public" name="tb_estrutura_curricular" color="C1D8EE" x="992" y="128" />
-		<entity schema="public" name="tb_grade_notas" color="C1D8EE" x="272" y="368" />
-		<entity schema="public" name="tb_grade_presenca" color="C1D8EE" x="512" y="720" />
-		<entity schema="public" name="tb_historico" color="C1D8EE" x="48" y="112" />
-		<entity schema="public" name="tb_pre_requisitos" color="C1D8EE" x="688" y="64" />
-		<entity schema="public" name="tb_professor" color="C1D8EE" x="1152" y="448" />
-		<entity schema="public" name="tb_semestre" color="C1D8EE" x="560" y="976" />
-		<entity schema="public" name="tb_turma" color="C1D8EE" x="1216" y="976" />
+		<entity schema="public" name="prof_disciplina" color="C1D8EE" x="1920" y="528" />
+		<entity schema="public" name="tb_aluno" color="C1D8EE" x="896" y="608" />
+		<entity schema="public" name="tb_aluno_disciplina" color="C1D8EE" x="1200" y="512" />
+		<entity schema="public" name="tb_aluno_semestre" color="C1D8EE" x="1152" y="688" />
+		<entity schema="public" name="tb_aluno_turma" color="C1D8EE" x="1360" y="752" />
+		<entity schema="public" name="tb_co_requisitos" color="C1D8EE" x="816" y="400" />
+		<entity schema="public" name="tb_curso" color="C1D8EE" x="1552" y="1056" />
+		<entity schema="public" name="tb_curso_aluno" color="C1D8EE" x="688" y="976" />
+		<entity schema="public" name="tb_curso_disciplina" color="C1D8EE" x="48" y="912" />
+		<entity schema="public" name="tb_departamento" color="C1D8EE" x="2032" y="640" />
+		<entity schema="public" name="tb_disciplina" color="C1D8EE" x="1488" y="352" />
+		<entity schema="public" name="tb_disciplina_historico" color="C1D8EE" x="352" y="176" />
+		<entity schema="public" name="tb_estrutura_curricular" color="C1D8EE" x="2096" y="368" />
+		<entity schema="public" name="tb_grade_notas" color="C1D8EE" x="496" y="448" />
+		<entity schema="public" name="tb_grade_presenca" color="C1D8EE" x="1536" y="848" />
+		<entity schema="public" name="tb_historico" color="C1D8EE" x="480" y="688" />
+		<entity schema="public" name="tb_pre_requisitos" color="C1D8EE" x="1600" y="48" />
+		<entity schema="public" name="tb_professor" color="C1D8EE" x="1872" y="832" />
+		<entity schema="public" name="tb_semestre" color="C1D8EE" x="1488" y="560" />
+		<entity schema="public" name="tb_turma" color="C1D8EE" x="1824" y="640" />
 		<script name="fk_tb_disciplina" id="Editor-1992" language="SQL" >
 			<string><![CDATA[SELECT
 	o.cod_departamento, o.nome_departamento, a.cod_disciplina, a.nome_disciplinas, a.descricao, a.cod_departamento
