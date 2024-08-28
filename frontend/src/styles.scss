@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$primary-color-palette: mat.define-palette(mat.$deep-purple-palette, 50);
+$secondary-color-palette: mat.define-palette(mat.$purple-palette, 100);
+$warn-color-palette: mat.define-palette(mat.$red-palette, 600);
+
+$custom-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary-color-palette,
+      accent: $secondary-color-palette,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+:root {
+  --primary-color: #605dc8;
+  --secondary-color: #8b89e6;
+  --accent-color: #e8e7fa;
+  --shadow-color: #e8e8e8;
+  --pinkPurple-color: #ede7f6ae;
+}
+
+@include mat.all-component-themes($custom-theme);
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";

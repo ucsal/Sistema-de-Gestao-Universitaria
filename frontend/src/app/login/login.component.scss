@@ -1,0 +1,124 @@
+a {
+  text-decoration: none;
+  color: #9796b7;
+  font-size: large;
+}
+a:hover {
+  text-decoration: none;
+  color: var(--accent-color);
+}
+button:hover {
+  background-color: var(--accent-color);
+}
+
+input {
+  border: solid 2px #625fc9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 4px;
+  display: inline-block;
+  width: 30%;
+}
+
+button {
+  padding: 10px;
+  border: solid 2px #625fc9;
+  background: #625fc9;
+  color: white;
+  border-radius: 8px;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+a {
+  color: #4a6b83;
+  text-decoration: none;
+  font-size: x-small;
+}
+label {
+  font-size: large;
+  font-weight: 100;
+}
+
+a:hover {
+  color: #000000;
+}
+
+.navbar-collapse {
+  transition: height 0.5s ease-out;
+}
+
+form {
+  width: 360px;
+  padding: 4% 0 0;
+  margin: auto;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  background-color: var(--pinkPurple-color);
+  max-width: 360px;
+  border-radius: 10%;
+  margin: 0 auto 50px;
+  padding: 45px;
+  text-align: center;
+}
+
+.form input {
+  outline: 0;
+  background: #ffffff;
+  width: 100%;
+  border: 0;
+  border-radius: 7px;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  border-radius: 10px;
+  background: #625fc9;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #ffffff;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.form button:hover,
+.form button:active,
+.form button:focus {
+  background: #9796b7;
+}
+
+@media (max-width: 765px) {
+  .mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
