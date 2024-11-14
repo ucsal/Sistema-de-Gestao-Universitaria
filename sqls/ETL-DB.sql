@@ -378,4 +378,3 @@ ALTER TABLE ONLY public.tb_professor_disciplina
 --
 -- PostgreSQL database dump complete
 --
-
