@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" database="PostgreSQL" id="PostgreSQL-1b17" >
+	<schema name="public" >
+		<comment><![CDATA[standard public schema]]></comment>
+		<table name="tb_aluno" row_count="0" spec="" >
+			<column name="nome_aluno" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="email" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="cpf" type="varchar" length="11" jt="12" mandatory="y" />
+			<column name="media_global" type="numeric" length="5" decimal="2" jt="2" />
+			<column name="status" type="varchar" length="1" jt="12" mandatory="y" />
+			<column name="nome_curso" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="matricula" type="bigserial" jt="-5" mandatory="y" />
+			<column name="curso_id" type="bigserial" jt="-5" mandatory="y" />
+			<index name="tb_aluno_email_key" unique="UNIQUE_KEY" >
+				<column name="email" />
+			</index>
+			<index name="tb_aluno_cpf_key" unique="UNIQUE_KEY" >
+				<column name="cpf" />
+			</index>
+			<index name="idx_tb_aluno_media_global" unique="NORMAL" spec="USING  btree" >
+				<column name="media_global" />
+			</index>
+			<index name="pk_tb_aluno" unique="PRIMARY_KEY" >
+				<column name="matricula" />
+			</index>
+			<fk name="fk_tb_aluno_tb_curso" to_schema="public" to_table="tb_curso" >
+				<fk_column name="curso_id" pk="id" />
+			</fk>
+		</table>
+		<table name="tb_aluno_disciplina" row_count="0" spec="" >
+			<column name="ano" type="integer" length="32" jt="4" mandatory="y" />
+			<column name="semestre" type="integer" length="32" jt="4" mandatory="y" />
+			<column name="nota_final" type="numeric" length="5" decimal="2" jt="2" />
+			<column name="status_disciplina" type="varchar" length="20" jt="12" mandatory="y" />
+			<column name="nota1" type="numeric" jt="2" mandatory="y" />
+			<column name="nota2" type="numeric" jt="2" mandatory="y" />
+			<column name="nome_disciplina" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="matricula_aluno" type="bigserial" jt="-5" mandatory="y" />
+			<column name="id_disciplina" type="bigserial" jt="-5" mandatory="y" />
+			<fk name="fk_tb_aluno_disciplina_tb_aluno" to_schema="public" to_table="tb_aluno" >
+				<fk_column name="matricula_aluno" pk="matricula" />
+			</fk>
+			<fk name="fk_tb_aluno_disciplina_tb_disciplina" to_schema="public" to_table="tb_disciplina" >
+				<fk_column name="id_disciplina" pk="id" />
+			</fk>
+		</table>
+		<table name="tb_curso" row_count="0" spec="" >
+			<column name="descricao" type="text" jt="12" />
+			<column name="duracao" type="integer" length="32" jt="4" mandatory="y" />
+			<column name="id" prior="id_curso" type="bigserial" jt="-5" mandatory="y" />
+			<column name="nome" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="id_departamento" type="bigserial" length="64" jt="-5" mandatory="y" />
+			<index name="pk_tb_curso" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_tb_curso_tb_departamento" to_schema="public" to_table="tb_departamento" >
+				<fk_column name="id_departamento" pk="id" />
+			</fk>
+		</table>
+		<table name="tb_curso_disciplina" prior="tbl" >
+			<column name="id_curso" type="bigserial" jt="-5" mandatory="y" />
+			<column name="id_disciplina" type="bigserial" jt="-5" mandatory="y" />
+			<fk name="fk_tb_curso_disciplina_tb_curso" to_schema="public" to_table="tb_curso" >
+				<fk_column name="id_curso" pk="id" />
+			</fk>
+			<fk name="fk_tb_curso_disciplina_tb_disciplina" to_schema="public" to_table="tb_disciplina" >
+				<fk_column name="id_disciplina" pk="id" />
+			</fk>
+		</table>
+		<table name="tb_departamento" row_count="0" spec="" >
+			<column name="descricao" type="text" jt="12" />
+			<column name="nome" type="varchar" jt="12" mandatory="y" />
+			<column name="id" type="bigserial" jt="-5" mandatory="y" />
+			<index name="pk_tb_departamento" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="tb_desconto" row_count="0" spec="" >
+			<column name="tipo_desconto" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="valor_desconto" type="numeric" length="10" decimal="2" jt="2" mandatory="y" />
+			<column name="matricula_aluno" type="bigserial" jt="-5" mandatory="y" />
+			<fk name="fk_tb_desconto_tb_aluno" to_schema="public" to_table="tb_aluno" >
+				<fk_column name="matricula_aluno" pk="matricula" />
+			</fk>
+		</table>
+		<table name="tb_disciplina" row_count="0" spec="" >
+			<column name="creditos" type="integer" length="32" jt="4" mandatory="y" />
+			<column name="id_departamento" type="integer" length="32" jt="4" mandatory="y" />
+			<column name="nome" type="varchar" length="9999999" jt="12" mandatory="y" />
+			<column name="id" type="bigserial" jt="-5" mandatory="y" />
+			<index name="pk_tb_disciplina" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_tb_disciplina_tb_departamento" to_schema="public" to_table="tb_departamento" >
+				<fk_column name="id_departamento" pk="id" />
+			</fk>
+		</table>
+		<table name="tb_professor" row_count="0" spec="" >
+			<column name="nome_professor" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="email_professor" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="cpf" type="varchar" length="11" jt="12" mandatory="y" />
+			<column name="telefone" type="varchar" jt="12" mandatory="y" />
+			<column name="endereco" type="varchar" jt="12" mandatory="y" />
+			<column name="matricula" type="bigserial" jt="-5" mandatory="y" />
+			<column name="id_departamento" type="bigserial" jt="-5" mandatory="y" />
+			<index name="tb_professor_email_professor_key" unique="UNIQUE_KEY" >
+				<column name="email_professor" />
+			</index>
+			<index name="tb_professor_cpf_key" unique="UNIQUE_KEY" >
+				<column name="cpf" />
+			</index>
+			<index name="pk_tb_professor" unique="PRIMARY_KEY" >
+				<column name="matricula" />
+			</index>
+			<fk name="fk_tb_professor_tb_departamento" to_schema="public" to_table="tb_departamento" >
+				<fk_column name="id_departamento" pk="id" />
+			</fk>
+		</table>
+		<table name="tb_professor_disciplina" row_count="0" spec="" >
+			<column name="semestre" type="integer" length="32" jt="4" mandatory="y" />
+			<column name="descricao" type="text" jt="12" />
+			<column name="matricula_professor" prior="id_professor" type="bigserial" jt="-5" mandatory="y" />
+			<column name="id_disciplina" type="bigserial" jt="-5" mandatory="y" />
+			<fk name="fk_tb_professor_disciplina_tb_professor" to_schema="public" to_table="tb_professor" >
+				<fk_column name="matricula_professor" pk="matricula" />
+			</fk>
+			<fk name="fk_tb_professor_disciplina_tb_disciplina" to_schema="public" to_table="tb_disciplina" >
+				<fk_column name="id_disciplina" pk="id" />
+			</fk>
+		</table>
+		<sequence name="tb_curso_id_curso_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tb_professor_disciplina_id_professr_seq" options="START WITH 1 INCREMENT BY 1" />
+	</schema>
+	<layout name="Main Layout" id="Layout-10f3" show_relation="columns" >
+		<entity schema="public" name="tb_aluno" color="BED3F4" x="368" y="464" />
+		<entity schema="public" name="tb_aluno_disciplina" color="BED3F4" x="608" y="464" />
+		<entity schema="public" name="tb_curso" color="BED3F4" x="112" y="368" />
+		<entity schema="public" name="tb_curso_disciplina" color="C1D8EE" x="336" y="352" />
+		<entity schema="public" name="tb_departamento" color="BED3F4" x="304" y="240" />
+		<entity schema="public" name="tb_desconto" color="BED3F4" x="128" y="544" />
+		<entity schema="public" name="tb_disciplina" color="BED3F4" x="528" y="256" />
+		<entity schema="public" name="tb_professor" color="BED3F4" x="48" y="144" />
+		<entity schema="public" name="tb_professor_disciplina" color="BED3F4" x="272" y="80" />
+		<group name="tb_departamento" color="ECF0F7" >
+			<entity schema="public" name="tb_departamento" />
+			<entity schema="public" name="tb_professor" />
+			<entity schema="public" name="tb_aluno" />
+			<entity schema="public" name="tb_professor_disciplina" />
+			<entity schema="public" name="tb_aluno_disciplina" />
+			<entity schema="public" name="tb_desconto" />
+			<entity schema="public" name="tb_disciplina" />
+			<entity schema="public" name="tb_curso_disciplina" />
+			<entity schema="public" name="tb_curso" />
+		</group>
+		<layout name="~Layout with Sample Tools" id="Layout-120" show_column_type="y" show_relation="columns" >
+			<entity schema="public" name="tb_aluno" color="BED3F4" x="320" y="496" />
+			<entity schema="public" name="tb_aluno_disciplina" color="BED3F4" x="592" y="768" />
+			<entity schema="public" name="tb_curso" color="BED3F4" x="48" y="256" />
+			<entity schema="public" name="tb_departamento" color="BED3F4" x="352" y="304" />
+			<entity schema="public" name="tb_desconto" color="BED3F4" x="592" y="560" />
+			<entity schema="public" name="tb_disciplina" color="BED3F4" x="592" y="304" />
+			<entity schema="public" name="tb_professor" color="BED3F4" x="352" y="48" />
+			<entity schema="public" name="tb_professor_disciplina" color="BED3F4" x="640" y="48" />
+			<script name="SQL Editor" id="Editor-20c6" language="SQL" >
+				<string><![CDATA[SELECT
+	id, nome, descricao
+FROM
+	"public".tb_departamento o;]]></string>
+			</script>
+			<browser id="Browse-1669" name="Relational Data Editor" confirm_updates="y" >
+				<browse_table schema="public" entity="tb_departamento" x="20" y="20" width="270" height="-60" />
+			</browser>
+			<query id="Query-6d1" name="Query Builder" >
+				<query_table schema="public" name="tb_disciplina" alias="td1" x="512" y="48" >
+					<column name="creditos" />
+					<column name="id_departamento" />
+				</query_table>
+			</query>
+		</layout>
+	</project>
